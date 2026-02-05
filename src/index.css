@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  background-color: #F8F9FA; /* Light background for PNB brand feel */
+}
+
+/* Custom Scrollbar for the Enterprise Look */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background: #A20E37;
+  border-radius: 10px;
+}
