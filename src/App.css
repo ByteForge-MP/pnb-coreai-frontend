@@ -124,3 +124,25 @@ body {
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+.bubble p {
+  margin: 0;
+}
+.bubble p:not(:last-child) {
+  margin-bottom: 8px;
+}
+
+.bubble {
+  white-space: pre-wrap; /* Essential for interpreting newlines */
+  overflow-wrap: break-word;
+}
+
+/* Ensure the paragraphs inside markdown don't squash together */
+.bubble p {
+  margin-bottom: 1rem;
+}
+
+.bubble li {
+  margin-left: 1.5rem;
+  display: list-item; /* Ensure bullets show up */
+}
