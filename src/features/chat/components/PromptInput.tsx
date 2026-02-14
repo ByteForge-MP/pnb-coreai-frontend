@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./PromptInput.css";
 
 export default function PromptInput({
   onSend,

@@ -1,8 +1,8 @@
-import ChatPage from "./features/chat/ChatPage";
+import Dashboard from "./features/chat/components/Dashboard";
 import "./App.css";
 
 function App() {
-  return <ChatPage />;
+  return <Dashboard />;
 }
 
 export default App;

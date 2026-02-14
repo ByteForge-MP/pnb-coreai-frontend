@@ -1,5 +1,6 @@
 import ReactMarkdown from 'react-markdown';
 import { Message } from "../types/chat";
+import "./MessageBubble.css";
 
 export default function MessageBubble({ message }: { message: Message }) {
   const isUser = message.role === "user";
