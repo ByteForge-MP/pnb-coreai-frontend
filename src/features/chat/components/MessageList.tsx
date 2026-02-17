@@ -1,5 +1,6 @@
 import { Message } from "../types/chat";
 import MessageBubble from "./MessageBubble";
+import "./MessageList.css";
 
 export default function MessageList({ messages }: { messages: Message[] }) {
   return (

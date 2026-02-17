@@ -1,0 +1,52 @@
+.sidebar {
+  width: 70px;
+  background: #f6b21a;
+  transition: width 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 12px 0;
+}
+
+.sidebar.open {
+  width: 240px;
+}
+
+/* TOP */
+.sidebar-top {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* LOGO with LEFT SPACE */
+.sidebar-logo {
+  width: 42px;
+  cursor: pointer;
+  margin-left: 14px;   /* 🔥 adds left spacing */
+}
+
+/* MENU ITEMS */
+.menu-item,
+.sidebar-bottom {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 16px;
+  cursor: pointer;
+  color: white;
+}
+
+.menu-item.active {
+  background: rgba(0,0,0,0.2);
+}
+
+.icon {
+  font-size: 18px;
+  min-width: 24px;
+  text-align: center;
+}
+
+.label {
+  white-space: nowrap;
+}

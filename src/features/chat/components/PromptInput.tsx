@@ -1,18 +1,34 @@
+
 import { useState } from "react";
+import "./PromptInput.css";
+import sendIcon from "../../../assets/send.svg";
+import stopIcon from "../../../assets/stop.svg";
 
 export default function PromptInput({
   onSend,
   disabled,
+  isStreaming,
+  onStop,
 }: {
   onSend: (text: string) => void;
   disabled?: boolean;
+  isStreaming?: boolean;
+  onStop?: () => void;
 }) {
   const [value, setValue] = useState("");
 
   const submit = () => {
-    if (!value.trim()) return;
+    if (!value.trim() || disabled || isStreaming) return;
     onSend(value);
     setValue("");
+  };
+
+  const handleButtonClick = () => {
+    if (isStreaming && onStop) {
+      onStop();
+    } else {
+      submit();
+    }
   };
 
   return (
@@ -22,9 +38,10 @@ export default function PromptInput({
         value={value}
         onChange={(e) => setValue(e.target.value)}
         onKeyDown={(e) => e.key === "Enter" && !e.shiftKey && submit()}
+        disabled={disabled || isStreaming}
       />
-      <button onClick={submit} disabled={disabled}>
-        Send
+      <button onClick={handleButtonClick} disabled={disabled} aria-label={isStreaming ? "Stop" : "Send"}>
+        <img src={isStreaming ? stopIcon : sendIcon} alt={isStreaming ? "Stop" : "Send"} style={{ width: 24, height: 24 }} />
       </button>
     </div>
   );
