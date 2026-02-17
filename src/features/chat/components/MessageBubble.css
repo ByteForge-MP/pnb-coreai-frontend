@@ -28,3 +28,17 @@
   color: #111827;
   border-top-left-radius: 0;
 }
+
+/* The 'Breathing' Animation */
+@keyframes pulse-pnb {
+  0% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(128, 0, 0, 0.2)); }
+  50% { transform: scale(1.05); filter: drop-shadow(0 0 15px rgba(128, 0, 0, 0.6)); }
+  100% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(128, 0, 0, 0.2)); }
+}
+
+/* Apply this class only when streaming is active */
+.avatar-streaming {
+  animation: pulse-pnb 2s infinite ease-in-out;
+  border: 2px solid #800000; /* PNB Maroon */
+  border-radius: 50%;
+}

@@ -1,8 +1,14 @@
-export async function streamChat(
-  prompt: string,
-  onChunk: (chunk: string) => void
-) {
+export async function streamChat( prompt: string, onChunk: (chunk: string) => void) {
   try {
+    const hour = new Date().getHours();
+    let timePeriod = "evening";
+
+    if (hour < 12) {
+      timePeriod = "morning";
+    } else if (hour < 17) {
+      timePeriod = "afternoon";
+    }
+
     const response = await fetch("http://localhost:8000/api/v1/stream", {
       method: "POST",
       headers: {
@@ -10,12 +16,12 @@ export async function streamChat(
       },
       body: JSON.stringify({
         prompt,
-        model: "gpt-4o",
+        model: "smollm2",
+        time: timePeriod,
       }),
     });
 
     if (!response.ok) {
-      // Handles 404, 500, or 400 errors
       throw new Error("Server Error");
     }
 
@@ -33,6 +39,6 @@ export async function streamChat(
     }
   } catch (error) {
     console.error("Stream Error:", error);
-    onChunk('data: {"text": "Server down and offline 🔌❌ Please try again later!"} data: [DONE]');
+    onChunk('data: {"text": "Server down and offline. Please try again later!"} data: [DONE]');
   }
 }

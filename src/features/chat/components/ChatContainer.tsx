@@ -1,3 +1,4 @@
+
 import { useChatStream } from "../hooks/useChatStream";
 import MessageList from "./MessageList";
 import PromptInput from "./PromptInput";
@@ -5,6 +6,13 @@ import "./ChatContainer.css";
 
 export default function ChatContainer() {
   const { messages, sendMessage, loading } = useChatStream();
+
+  // Placeholder for stop streaming logic
+  const handleStop = () => {
+    // TODO: Implement abort/stop streaming logic in useChatStream
+    // For now, just a placeholder
+    // e.g., call abortController.abort() if implemented
+  };
 
   return (
     <div className="chat-container">
@@ -17,7 +25,12 @@ export default function ChatContainer() {
           </div>
       </header>
       <MessageList messages={messages} />
-      <PromptInput onSend={sendMessage} disabled={loading} />
+      <PromptInput
+        onSend={sendMessage}
+        disabled={loading}
+        isStreaming={loading}
+        onStop={handleStop}
+      />
     </div>
   );
 }

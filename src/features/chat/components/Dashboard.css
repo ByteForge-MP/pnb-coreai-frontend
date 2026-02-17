@@ -1,3 +1,13 @@
+/* Ensure dashboard-content fills available height for scrollable chat */
+.dashboard-content {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-end;
+  min-height: 0;
+  height: 100%;
+}
 .dashboard {
   display: flex;
   height: 100vh;
