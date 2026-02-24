@@ -13,3 +13,5 @@ mkdir -p src/{api,assets,components,config,features,hooks,layouts,pages,stores,t
 # Create the specific OneAI Chat feature structure
 mkdir -p src/features/chat/{api,components,hooks,types}
 
+# Windows Command
+$env:path (for sys variables print)
