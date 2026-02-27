@@ -18,12 +18,19 @@ export default function ChatContainer() {
     <div className="chat-container">
       <header className="chat-header">
           <div className="chat-title">
-            <h1>PNB OneAI</h1>
+            <h1>PNB GPT</h1>
           </div>
           <div>
             <span>Your intelligent banking assistant</span>
           </div>
       </header>
+
+      {messages.length === 0 && (
+         <div className="welcome-message">
+           Hello, how can I help you?
+         </div>
+      )}
+
       <MessageList messages={messages} />
       <PromptInput
         onSend={sendMessage}
