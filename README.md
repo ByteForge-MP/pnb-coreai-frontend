@@ -1,17 +1,17 @@
-# pnb-coreai-frontend
+## Important Commands
 
-# Initialize in current folder
-npm create vite@latest . -- --template react-swc-ts
+#### Initialize in current folder <br>
+npm create vite@latest . -- --template react-swc-ts <br>
 
-# Install dependencies immediately
-npm install
-npm install react-markdown
+#### Install dependencies immediately <br>
+npm install <br>
+npm install react-markdown <br>
 
-# Create the core enterprise directories
-mkdir -p src/{api,assets,components,config,features,hooks,layouts,pages,stores,types,utils}
+#### Create the core enterprise directories <br>
+mkdir -p src/{api,assets,components,config,features,hooks,layouts,pages,stores,types,utils} <br>
 
-# Create the specific OneAI Chat feature structure
-mkdir -p src/features/chat/{api,components,hooks,types}
+#### Create the specific OneAI Chat feature structure <br>
+mkdir -p src/features/chat/{api,components,hooks,types} <br>
 
-# Windows Command
-$env:path (for sys variables print)
+#### Windows Command <br>
+$env:path (for sys variables print) <br>
