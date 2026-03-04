@@ -1,4 +1,8 @@
-export async function streamChat( prompt: string, onChunk: (chunk: string) => void) {
+export async function streamChat(
+  prompt: string,
+  file: File | null | undefined,
+  onChunk: (chunk: string) => void
+) {
   try {
     const hour = new Date().getHours();
     let timePeriod = "evening";
@@ -9,16 +13,20 @@ export async function streamChat( prompt: string, onChunk: (chunk: string) => vo
       timePeriod = "afternoon";
     }
 
+    // ✅ build multipart request instead of JSON
+    const formData = new FormData();
+    formData.append("prompt", prompt);
+    formData.append("model", "smollm2");
+    formData.append("time", timePeriod);
+
+    // append file if present
+    if (file) {
+      formData.append("file", file);
+    }
+
     const response = await fetch("http://localhost:8000/api/v1/stream", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        prompt,
-        model: "smollm2",
-        time: timePeriod,
-      }),
+      body: formData, // ❗ no headers here
     });
 
     if (!response.ok) {
@@ -39,6 +47,8 @@ export async function streamChat( prompt: string, onChunk: (chunk: string) => vo
     }
   } catch (error) {
     console.error("Stream Error:", error);
-    onChunk('data: {"text": "Server down and offline. Please try again later!"} data: [DONE]');
+    onChunk(
+      'data: {"text": "Server down and offline. Please try again later!"} data: [DONE]'
+    );
   }
 }

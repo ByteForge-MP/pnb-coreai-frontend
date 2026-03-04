@@ -15,11 +15,19 @@ export default function MessageBubble({ message }: { message: Message }) {
     while ((match = regex.exec(raw)) !== null) {
       combinedText += match[1];
     }
-
-    return combinedText
-           .replace(/\\n/g, '\n')
-           .replace(/\n/g, '  \n')
-            || raw;
+  let text = combinedText || raw;
+  console.log("Extracted Text:", text);
+  try {
+    text = JSON.parse(`"${text}"`);
+  } catch {
+    // ignore decoding errors
+  }
+  // normalize spacing
+  text = text
+    .replace(/\n\n+/g, "\n")   // remove extra blank lines
+    .trim();
+  return text
+  
   };
 
   const cleanContent = getExtractedContent(message.content);

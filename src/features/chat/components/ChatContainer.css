@@ -8,6 +8,7 @@
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(0,0,0,0.08);
   height: 100%;
+  position: relative;
 }
 
 .chat-header {
@@ -116,7 +117,7 @@
 .welcome-message {
   position: absolute;
   top: 50%;
-  left: 46%;
+  left: 50%;
   transform: translate(-50%, -50%);
   font-size: 42px;
   color: #777;

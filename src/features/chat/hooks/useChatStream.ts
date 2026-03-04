@@ -6,7 +6,8 @@ export function useChatStream() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(false);
 
-  const sendMessage = async (prompt: string) => {
+  // ✅ accept file also
+  const sendMessage = async (prompt: string, file?: File | null) => {
     const userMessage: Message = {
       id: crypto.randomUUID(),
       role: "user",
@@ -22,7 +23,8 @@ export function useChatStream() {
     setMessages((prev) => [...prev, userMessage, assistantMessage]);
     setLoading(true);
 
-    await streamChat(prompt, (chunk) => {
+    // ✅ send both prompt + file to API layer
+    await streamChat(prompt, file, (chunk) => {
       setMessages((prev) =>
         prev.map((m) =>
           m.id === assistantMessage.id
