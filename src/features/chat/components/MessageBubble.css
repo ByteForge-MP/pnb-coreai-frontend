@@ -88,8 +88,8 @@
 
 .message-actions {
   display: flex;
-  gap: 8px;
-  margin-top: 4px;
+  gap: 12px;
+  margin-top: 6px;
 }
 
 /* Icon buttons */
@@ -99,7 +99,13 @@
   background: transparent;
   font-size: 16px;
   cursor: pointer;
-  opacity: 0.6;
+  opacity: 0.8;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.icon-btn:hover {
+  opacity: 1;
+  transform: scale(1.15);
 }
 
 .icon-btn:hover {
@@ -187,3 +193,4 @@
   50% { opacity: 1; }
   100% { opacity: 0.3; }
 }
+

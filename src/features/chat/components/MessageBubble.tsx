@@ -30,16 +30,18 @@ export default function MessageBubble({ message }: { message: Message }) {
 
   const isUser = message.role === "user";
 
-  /* Detect thinking state */
-
   const isThinking =
     message.role === "assistant" &&
+    message.streaming &&
     message.content.trim() === "";
+
+  const isStreamingText =
+    message.role === "assistant" &&
+    message.streaming &&
+    message.content.trim() !== "";
 
   const [chartData, setChartData] = useState<any>(null);
   const [showChart, setShowChart] = useState(false);
-
-  /* Extract JSON from response */
 
   const extractJSON = (text: string) => {
 
@@ -55,8 +57,6 @@ export default function MessageBubble({ message }: { message: Message }) {
 
   };
 
-  /* Download PDF */
-
   const downloadPDF = () => {
 
     const doc = new jsPDF();
@@ -68,8 +68,6 @@ export default function MessageBubble({ message }: { message: Message }) {
     doc.save("response.pdf");
 
   };
-
-  /* Generate chart */
 
   const generateChart = () => {
 
@@ -95,9 +93,9 @@ export default function MessageBubble({ message }: { message: Message }) {
 
       <div className="message-wrapper">
 
-        {/* THINKING STATE */}
+        {/* THINKING */}
 
-        {isThinking ? (
+        {isThinking && (
 
           <div className="bubble thinking">
             <span className="thinking-text">Thinking</span>
@@ -106,11 +104,23 @@ export default function MessageBubble({ message }: { message: Message }) {
             <span className="dot"></span>
           </div>
 
-        ) : (
+        )}
+
+        {/* STREAMING TEXT */}
+
+        {isStreamingText && (
+
+          <div className="bubble">
+            <ReactMarkdown>{message.content}</ReactMarkdown>
+          </div>
+
+        )}
+
+        {/* FINAL MESSAGE */}
+
+        {!message.streaming && (
 
           <>
-            {/* NORMAL MESSAGE */}
-
             <div className="bubble">
 
               {isUser ? (
@@ -121,16 +131,17 @@ export default function MessageBubble({ message }: { message: Message }) {
 
             </div>
 
-            {/* ACTION ICONS */}
-
-            {!isUser && message.content.trim() !== "" && (
+            {!isUser && (
 
               <div className="message-actions">
+
+                <button className="icon-btn">👍</button>
+
+                <button className="icon-btn">👎</button>
 
                 <button
                   className="icon-btn"
                   onClick={downloadPDF}
-                  title="Download"
                 >
                   ⬇️
                 </button>
@@ -138,7 +149,6 @@ export default function MessageBubble({ message }: { message: Message }) {
                 <button
                   className="icon-btn"
                   onClick={generateChart}
-                  title="Generate Chart"
                 >
                   📊
                 </button>
@@ -152,8 +162,6 @@ export default function MessageBubble({ message }: { message: Message }) {
         )}
 
       </div>
-
-      {/* CHART POPUP */}
 
       {showChart && chartData && (
 
@@ -174,10 +182,7 @@ export default function MessageBubble({ message }: { message: Message }) {
               Close
             </button>
 
-            <Bar
-              data={chartData}
-              options={{ responsive: true }}
-            />
+            <Bar data={chartData} options={{ responsive: true }} />
 
           </div>
 
