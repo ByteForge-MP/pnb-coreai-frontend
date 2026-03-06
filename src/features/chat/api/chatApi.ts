@@ -4,6 +4,7 @@ export async function streamChat(
   onChunk: (chunk: string) => void
 ) {
   try {
+
     const hour = new Date().getHours();
     let timePeriod = "evening";
 
@@ -13,20 +14,18 @@ export async function streamChat(
       timePeriod = "afternoon";
     }
 
-    // ✅ build multipart request instead of JSON
     const formData = new FormData();
     formData.append("prompt", prompt);
     formData.append("model", "smollm2");
     formData.append("time", timePeriod);
 
-    // append file if present
     if (file) {
       formData.append("file", file);
     }
 
     const response = await fetch("http://localhost:8000/api/v1/stream", {
       method: "POST",
-      body: formData, // ❗ no headers here
+      body: formData
     });
 
     if (!response.ok) {
@@ -40,15 +39,54 @@ export async function streamChat(
     const reader = response.body.getReader();
     const decoder = new TextDecoder("utf-8");
 
+    let buffer = "";
+
     while (true) {
+
       const { value, done } = await reader.read();
+
       if (done) break;
-      onChunk(decoder.decode(value));
+
+      buffer += decoder.decode(value, { stream: true });
+
+      const lines = buffer.split("\n");
+
+      buffer = lines.pop() || "";
+
+      for (const line of lines) {
+
+        const trimmed = line.trim();
+
+        if (!trimmed.startsWith("data:")) continue;
+
+        const data = trimmed.replace("data:", "").trim();
+
+        if (data === "[DONE]") {
+          return;
+        }
+
+        try {
+
+          const json = JSON.parse(data);
+
+          if (json.text) {
+            onChunk(json.text);
+          }
+
+        } catch (err: unknown) {
+          if (err instanceof Error) {
+             console.error("Stream error:", err.message);
+            } else {
+             console.error("Stream error:", err);
+  }
+        }
+      }
     }
+
   } catch (error) {
+
     console.error("Stream Error:", error);
-    onChunk(
-      'data: {"text": "Server down and offline. Please try again later!"} data: [DONE]'
-    );
+
+    onChunk("Server down and offline. Please try again later!");
   }
 }
