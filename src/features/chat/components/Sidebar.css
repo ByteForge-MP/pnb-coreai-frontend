@@ -12,21 +12,24 @@
   width: 240px;
 }
 
-/* TOP */
+/* ================= TOP AREA ================= */
+
 .sidebar-top {
   display: flex;
   flex-direction: column;
   gap: 18px;
 }
 
-/* LOGO with LEFT SPACE */
+/* LOGO */
+
 .sidebar-logo {
   width: 42px;
   cursor: pointer;
-  margin-left: 14px;   /* 🔥 adds left spacing */
+  margin-left: 14px;
 }
 
-/* MENU ITEMS */
+/* ================= MENU ITEMS ================= */
+
 .menu-item,
 .sidebar-bottom {
   display: flex;
@@ -49,4 +52,35 @@
 
 .label {
   white-space: nowrap;
+}
+
+/* ================= SETTINGS DIALOG (shared) ================= */
+
+.theme-dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.theme-dialog {
+  background: white;
+  padding: 24px;
+  border-radius: 10px;
+  width: 260px;
+  text-align: center;
+}
+
+.theme-dialog button {
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
 }
