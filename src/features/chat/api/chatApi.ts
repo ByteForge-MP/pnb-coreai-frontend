@@ -1,7 +1,7 @@
 export async function streamChat(
   prompt: string,
   file: File | null | undefined,
-  onChunk: (chunk: string) => void
+  onChunk: (chunk: string, done?: boolean) => void
 ) {
   try {
 
@@ -61,7 +61,9 @@ export async function streamChat(
 
         const data = trimmed.replace("data:", "").trim();
 
+        // STREAM FINISHED
         if (data === "[DONE]") {
+          onChunk("", true);   // notify UI streaming finished
           return;
         }
 
@@ -70,16 +72,19 @@ export async function streamChat(
           const json = JSON.parse(data);
 
           if (json.text) {
-            onChunk(json.text);
+            onChunk(json.text);   // normal streaming chunk
           }
 
         } catch (err: unknown) {
+
           if (err instanceof Error) {
-             console.error("Stream error:", err.message);
-            } else {
-             console.error("Stream error:", err);
-  }
+            console.error("Stream error:", err.message);
+          } else {
+            console.error("Stream error:", err);
+          }
+
         }
+
       }
     }
 
@@ -87,6 +92,7 @@ export async function streamChat(
 
     console.error("Stream Error:", error);
 
-    onChunk("Server down and offline. Please try again later!");
+    onChunk("Server down and offline. Please try again later!", true);
+
   }
 }
