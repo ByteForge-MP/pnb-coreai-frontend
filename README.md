@@ -16,5 +16,9 @@ mkdir -p src/features/chat/{api,components,hooks,types} <br>
 #### Windows Command <br>
 $env:path (for sys variables print) <br>
 
-npm install jspdf
-npm install chart.js react-chartjs-2
+npm install jspdf <br>
+npm install chart.js react-chartjs-2 <br>
+
+
+
+boxicons <br>

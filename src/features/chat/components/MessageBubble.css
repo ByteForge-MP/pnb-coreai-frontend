@@ -194,3 +194,23 @@
   100% { opacity: 0.3; }
 }
 
+.assistant-avatar{
+  width:60px;
+  height:60px;
+}
+
+.assistant-avatar img{
+  width:60px;
+  height:60px;
+  border-radius:50%;
+}
+
+.assistant-avatar video{
+  width:70px;
+  height:70px;
+  border-radius:50%;
+  object-fit:cover;
+}
+
+
+
