@@ -1,3 +1,6 @@
+
+const API = import.meta.env.VITE_API_URL
+
 export async function streamChat(
   prompt: string,
   file: File | null | undefined,
@@ -23,7 +26,7 @@ export async function streamChat(
       formData.append("file", file);
     }
 
-    const response = await fetch("http://localhost:8000/api/v1/stream", {
+    const response = await fetch(`${API}/api/v1/stream`, {
       method: "POST",
       body: formData
     });

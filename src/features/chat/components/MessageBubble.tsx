@@ -251,6 +251,10 @@ export default function MessageBubble({ message }: { message: Message }) {
 
             <div className="bubble">
 
+              { !isUser && 
+               <img src={message.image} className="rtl-slide"/>
+              }
+
               {isUser ? (
                 message.content
               ) : (

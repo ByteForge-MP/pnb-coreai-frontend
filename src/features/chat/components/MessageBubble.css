@@ -212,5 +212,25 @@
   object-fit:cover;
 }
 
+.rtl-slide {
+  animation: rtlSlideFade 0.6s ease-out forwards;
+}
+
+@keyframes rtlSlideFade {
+  0% {
+    opacity: 0;
+    transform: translateX(40px); /* start slightly right */
+  }
+
+  60% {
+    opacity: 0.7;
+    transform: translateX(8px); /* smooth deceleration */
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0); /* final position */
+  }
+}
 
 
