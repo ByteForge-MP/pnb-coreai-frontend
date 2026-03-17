@@ -55,7 +55,7 @@ export default function PromptInput({
       {selectedFile && (
         <div className="file-preview">
           <span style={{ color: "black" }}>{selectedFile.name}</span>
-          <button onClick={() => setSelectedFile(null)}><img width={15} height={15} src="../../src/assets/cross.svg" /></button>
+          <button onClick={() => setSelectedFile(null)}><img width={15} height={15} src="/cross.svg" /></button>
         </div>
       )}
 
@@ -64,7 +64,7 @@ export default function PromptInput({
         onClick={() => setShowMenu(!showMenu)}
         disabled={disabled || isStreaming}
       >
-      <img width={15} height={15} src="../../src/assets/attachment.svg" />
+      <img width={15} height={15} src="/attachment.svg" />
       </button>
 
       {showMenu && (
@@ -75,7 +75,7 @@ export default function PromptInput({
               setShowMenu(false);
             }}
           >
-          <img width={15} height={15} src="../../src/assets/file.svg" /> Upload File
+          <img width={15} height={15} src="/file.svg" /> Upload File
           </div>
 
           <div
@@ -84,7 +84,7 @@ export default function PromptInput({
               setShowMenu(false);
             }}
           >
-          <img width={15} height={15} src="../../src/assets/mic.svg" /> Upload Voice
+          <img width={15} height={15} src="/mic.svg" /> Upload Voice
           </div>
         </div>
       )}
@@ -130,7 +130,7 @@ export default function PromptInput({
       <img 
         width={15} 
         height={15} 
-        src={isStreaming ? "../../src/assets/stop.svg" : "../../src/assets/send.svg"}
+        src={isStreaming ? "/stop.svg" : "/send.svg"}
       /> 
       </button>
     </div>

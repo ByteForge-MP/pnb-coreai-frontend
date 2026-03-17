@@ -32,3 +32,17 @@ If above not give like this -> git remote set-url origin https://github.com/<use
 
 (Takes remote changes + keeps your local changes + creates a merge commit) <br>
 git pull --no-rebase
+
+% #########################
+
+docker build -t frontend-v1 .  <br>
+docker images <br>
+docker run -p 3000:80 frontend-v1 <br>
+
+% ##### Delete Image #########
+docker ps -a
+docker stop <container-id>
+docker rm <container-id>
+docker rmi <image_name>
+
+

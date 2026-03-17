@@ -202,7 +202,7 @@ export default function MessageBubble({ message }: { message: Message }) {
           playsInline
         >
           <source
-            src="../../src/assets/girl-avatar.mp4"
+            src="/girl-avatar.mp4"
             type="video/mp4"
           />
         </video>
@@ -270,11 +270,11 @@ export default function MessageBubble({ message }: { message: Message }) {
               <div className="message-actions">
 
                 <button className="icon-btn">
-                  <img width={15} height={15} src="../../src/assets/like.svg" />
+                  <img width={15} height={15} src="/like.svg" />
                 </button>
 
                 <button className="icon-btn">
-                  <img width={15} height={15} src="../../src/assets/dislike.svg" />
+                  <img width={15} height={15} src="/dislike.svg" />
                 </button>
 
                 <button
@@ -284,7 +284,7 @@ export default function MessageBubble({ message }: { message: Message }) {
                 <img 
                 width={15} 
                 height={15} 
-                src={clicked ? "../../src/assets/download_anime.svg" : "../../src/assets/download.svg"}
+                src={clicked ? "download_anime.svg" : "/download.svg"}
                 />
                 </button>
 
@@ -292,14 +292,14 @@ export default function MessageBubble({ message }: { message: Message }) {
                   className="icon-btn"
                   onClick={generateChart}
                 >
-                <img width={15} height={15} src="../../src/assets/chart.svg" />
+                <img width={15} height={15} src="/chart.svg" />
                 </button>
 
                 <button
                   className="icon-btn"
                   onClick={speakText}
                 >
-                <img width={15} height={15} src="../../src/assets/voice.svg" />
+                <img width={15} height={15} src="/voice.svg" />
                 </button>
 
               </div>

@@ -1,4 +1,3 @@
-# Step 1: Build stage
 FROM node:18 AS build
 
 WORKDIR /app
@@ -8,15 +7,13 @@ RUN npm install
 
 COPY . .
 
-# Vite build
+# 👇 Accept env variable
+ARG VITE_API_URL
+
+# 👇 Inject into build
+ENV VITE_API_URL=$VITE_API_URL
+
 RUN npm run build
 
-# Step 2: Serve using Nginx
 FROM nginx:alpine
-
-# Copy dist folder (IMPORTANT difference)
 COPY --from=build /app/dist /usr/share/nginx/html
-
-EXPOSE 80
-
-CMD ["nginx", "-g", "daemon off;"]
