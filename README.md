@@ -28,3 +28,7 @@ boxicons <br>
 % ######################
 
 git remote -v <br>
+If above not give like this -> git remote set-url origin https://github.com/<username>/<repo>.git then our pointing is wrong do like this <br>
+
+(Takes remote changes + keeps your local changes + creates a merge commit) <br>
+git pull --no-rebase
