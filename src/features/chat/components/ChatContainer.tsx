@@ -1,43 +1,50 @@
-
 import { useChatStream } from "../hooks/useChatStream";
 import MessageList from "./MessageList";
 import PromptInput from "./PromptInput";
 import "./ChatContainer.css";
 
-export default function ChatContainer() {
+interface ChatContainerProps {
+  theme: "light" | "dark";
+}
+
+export default function ChatContainer({ theme }: ChatContainerProps) {
+
   const { messages, sendMessage, loading } = useChatStream();
 
-  // Placeholder for stop streaming logic
   const handleStop = () => {
-    // TODO: Implement abort/stop streaming logic in useChatStream
-    // For now, just a placeholder
-    // e.g., call abortController.abort() if implemented
+    // placeholder for stop streaming logic
   };
 
   return (
-    <div className="chat-container">
+    <div className={`chat-container ${theme}`}>
+
       <header className="chat-header">
-          <div className="chat-title">
-            <h1>PNB GPT</h1>
-          </div>
-          <div>
-            <span>Your intelligent banking assistant</span>
-          </div>
+
+        <div className="chat-title">
+          <h1>PNB GPT</h1>
+        </div>
+
+        <div>
+          <span>Your intelligent banking assistant</span>
+        </div>
+
       </header>
 
       {messages.length === 0 && (
-         <div className="welcome-message">
-           Hello, how can I help you?
-         </div>
+        <div className="welcome-message">
+          Hello, how can I help you?
+        </div>
       )}
 
       <MessageList messages={messages} />
+
       <PromptInput
         onSend={sendMessage}
         disabled={loading}
         isStreaming={loading}
         onStop={handleStop}
       />
+
     </div>
   );
 }

@@ -1,7 +1,12 @@
 import { useState } from "react";
 import "./Sidebar.css";
 
-export default function Sidebar() {
+interface SidebarProps {
+  openSettings: () => void;
+}
+
+export default function Sidebar({ openSettings }: SidebarProps) {
+
   const [open, setOpen] = useState(false);
 
   return (
@@ -17,7 +22,7 @@ export default function Sidebar() {
 
       </div>
 
-      <div className="sidebar-bottom">
+      <div className="sidebar-bottom" onClick={openSettings}>
         <span className="icon">⚙</span>
         {open && <span className="label">Settings</span>}
       </div>

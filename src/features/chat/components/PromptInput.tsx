@@ -2,8 +2,7 @@ import { useState, useRef } from "react";
 import "./PromptInput.css";
 
 interface PromptInputProps {
-  onSend: (text: string) => void;
-  onUpload?: (file: File) => void;
+  onSend: (text: string, file?: File | null) => void;
   disabled?: boolean;
   isStreaming?: boolean;
   onStop?: () => void;
@@ -11,26 +10,35 @@ interface PromptInputProps {
 
 export default function PromptInput({
   onSend,
-  onUpload,
   disabled,
   isStreaming,
   onStop,
 }: PromptInputProps) {
   const [value, setValue] = useState("");
   const [showMenu, setShowMenu] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const audioInputRef = useRef<HTMLInputElement>(null);
 
-  const submit = () => {
-    if (!value.trim() || disabled || isStreaming) return;
-    onSend(value);
-    setValue("");
+  const handleFile = (
+    file?: File,
+    input?: HTMLInputElement | null
+  ) => {
+    if (!file) return;
+
+    setSelectedFile(file);
+
+    if (input) input.value = "";
   };
 
-  const handleFile = (file?: File) => {
-    if (!file || !onUpload) return;
-    onUpload(file);
+  const submit = () => {
+    if ((!value.trim() && !selectedFile) || disabled || isStreaming) return;
+
+    onSend(value, selectedFile);
+
+    setValue("");
+    setSelectedFile(null);
   };
 
   const handleButtonClick = () => {
@@ -44,7 +52,13 @@ export default function PromptInput({
   return (
     <div className="prompt-box">
 
-      {/* 📎 Attach Button */}
+      {selectedFile && (
+        <div className="file-preview">
+          <span>{selectedFile.name}</span>
+          <button onClick={() => setSelectedFile(null)}>✖</button>
+        </div>
+      )}
+
       <button
         className="attach-btn"
         onClick={() => setShowMenu(!showMenu)}
@@ -53,7 +67,6 @@ export default function PromptInput({
         📎
       </button>
 
-      {/* Attach Menu */}
       {showMenu && (
         <div className="attach-menu">
           <div
@@ -76,12 +89,13 @@ export default function PromptInput({
         </div>
       )}
 
-      {/* Hidden File Inputs */}
       <input
         type="file"
         ref={fileInputRef}
         style={{ display: "none" }}
-        onChange={(e) => handleFile(e.target.files?.[0])}
+        onChange={(e) =>
+          handleFile(e.target.files?.[0], e.target)
+        }
         accept=".pdf,.doc,.docx,.txt,.xlsx"
       />
 
@@ -89,11 +103,12 @@ export default function PromptInput({
         type="file"
         ref={audioInputRef}
         style={{ display: "none" }}
-        onChange={(e) => handleFile(e.target.files?.[0])}
+        onChange={(e) =>
+          handleFile(e.target.files?.[0], e.target)
+        }
         accept="audio/*"
       />
 
-      {/* Textarea */}
       <textarea
         placeholder="Ask PNB GPT anything..."
         value={value}
@@ -107,7 +122,6 @@ export default function PromptInput({
         }}
       />
 
-      {/* Send / Stop Button */}
       <button
         className="send-btn"
         onClick={handleButtonClick}
@@ -115,7 +129,6 @@ export default function PromptInput({
       >
         {isStreaming ? "⏹️" : "➤"}
       </button>
-
     </div>
   );
 }

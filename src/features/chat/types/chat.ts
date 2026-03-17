@@ -4,4 +4,5 @@ export interface Message {
   id: string;
   role: Role;
   content: string;
+  streaming?: boolean; // true while tokens are coming
 }
