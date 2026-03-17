@@ -40,9 +40,26 @@ docker images <br>
 docker run -p 3000:80 frontend-v1 <br>
 
 % ##### Delete Image #########
-docker ps -a
-docker stop <container-id>
-docker rm <container-id>
-docker rmi <image_name>
+docker ps -a <br>
+docker stop <container-id> <br>
+docker rm <container-id> <br>
+docker rmi <image_name> <br>
+
+% #############################
+Docker Hub requires this format: <br>
+<dockerhub-username>/<repo-name>:<iamge_name> <br>
+byteforgemp/pnb:frontend-v1
+
+% ############ push image to docker hub ############
+docker login
+docker tag frontend-v1 byteforgemp/pnb:frontend-v1
+docker push byteforgemp/pnb:frontend-v1
+
+% ####### Others will pull #########
+docker pull byteforgemp/pnb:frontend-v1
+docker run -p 3000:80 byteforgemp/pnb:frontend-v1
+
+
+
 
 
