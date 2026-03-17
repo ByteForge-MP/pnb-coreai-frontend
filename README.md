@@ -22,3 +22,9 @@ npm install chart.js react-chartjs-2 <br>
 
 
 boxicons <br>
+
+
+
+% ######################
+
+git remote -v <br>
