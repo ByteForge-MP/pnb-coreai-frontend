@@ -109,15 +109,24 @@ docker buildx build \
   -t byteforgemp/pnb:frontend-v2 \
   --push .
 
-docker buildx build --load \
-  --build-arg TORCH_INDEX_URL=https://download.pytorch.org/whl/cu121 \
-  -t backend-v1 .
-
 docker buildx build \
   --platform linux/amd64,linux/arm64 \
   --build-arg VITE_API_URL=http://backend:8000 \
   -t byteforgemp/pnb:frontend-v2 \
   --push .
+
+docker buildx build \
+  --platform linux/amd64,linux/arm64 \
+  -t byteforgemp/pnb:backend-v2 \
+  --push .
+
+docker buildx build \
+  --platform linux/amd64 \
+  --build-arg TORCH_INDEX_URL=https://download.pytorch.org/whl/cu121 \
+  -t byteforgemp/pnb:backend-v2-gpu \
+  --push .
+
+
 
 
 
