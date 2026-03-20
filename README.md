@@ -52,12 +52,72 @@ byteforgemp/pnb:frontend-v1
 
 % ############ push image to docker hub ############
 docker login
-docker tag frontend-v1 byteforgemp/pnb:frontend-v1
-docker push byteforgemp/pnb:frontend-v1
+docker tag backend-v1 byteforgemp/pnb:backend-v1
+docker push byteforgemp/pnb:backend-v1
 
 % ####### Others will pull #########
 docker pull byteforgemp/pnb:frontend-v1
 docker run -p 3000:80 byteforgemp/pnb:frontend-v1
+
+% ############ Create Network then below docker run #############
+
+docker network create pnb-ai
+
+% ########### Ollama D ##############
+
+docker run -d \
+  --name ollama \
+  --network pnb-ai \
+  ollama/ollama
+
+docker exec -it ollama ollama pull mistral
+
+http://ollama:11434
+
+% ########### SearSnG D ##############
+
+docker run -d \
+  --name searxng \
+  --network pnb-ai \
+  searxng/searxng
+
+http://searxng:8080
+
+% ############## Backend ##############
+
+docker run -d \
+  --name backend \
+  --network pnb-ai \
+  byteforgemp/pnb:backend-v2
+
+http://backend:8000
+
+% ############## Frontend ##############
+
+docker run -d \
+  --name frontend \
+  --network pnb-ai \
+  -p 4200:80 \
+  byteforgemp/pnb:frontend-v2
+
+% ############## Diff Architecture ##############
+
+docker buildx create --use (Enable buildx (one-time))
+
+docker buildx build \
+  --platform linux/amd64,linux/arm64 \
+  -t byteforgemp/pnb:frontend-v2 \
+  --push .
+
+docker buildx build --load \
+  --build-arg TORCH_INDEX_URL=https://download.pytorch.org/whl/cu121 \
+  -t backend-v1 .
+
+docker buildx build \
+  --platform linux/amd64,linux/arm64 \
+  --build-arg VITE_API_URL=http://backend:8000 \
+  -t byteforgemp/pnb:frontend-v2 \
+  --push .
 
 
 
