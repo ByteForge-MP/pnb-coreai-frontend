@@ -87,18 +87,20 @@ http://searxng:8080
 
 docker run -d \
   --name backend \
-  --network pnb-ai \
+  -p 8000:8000 \
   byteforgemp/pnb:backend-v2
 
-http://backend:8000
+http://localhost:8000
 
 % ############## Frontend ##############
 
 docker run -d \
   --name frontend \
-  --network pnb-ai \
   -p 4200:80 \
   byteforgemp/pnb:frontend-v2
+
+Open:
+http://localhost:4200
 
 % ############## Diff Architecture ##############
 
@@ -109,11 +111,8 @@ docker buildx build \
   -t byteforgemp/pnb:frontend-v2 \
   --push .
 
-docker buildx build \
-  --platform linux/amd64,linux/arm64 \
-  --build-arg VITE_API_URL=http://backend:8000 \
-  -t byteforgemp/pnb:frontend-v2 \
-  --push .
+Frontend is configured to call `http://localhost:8000` directly from the
+browser, so make sure the backend container publishes port `8000` to the host.
 
 docker buildx build \
   --platform linux/amd64,linux/arm64 \
@@ -129,6 +128,32 @@ docker buildx build \
 
 
 
+
+% ##########################
+
+docker run -d \
+  --name ollama \
+  -p 11434:11434 \
+  ollama/ollama
+
+docker exec -it ollama ollama pull mistral
+
+docker run -d \
+  --name searxng \
+  -p 8080:8080 \
+  searxng/searxng
+
+docker run -d \
+  --name backend \
+  -p 8000:8000 \
+  -e OLLAMA_URL=http://host.docker.internal:11434 \
+  -e SEARXNG_URL=http://host.docker.internal:8080 \
+  byteforgemp/pnb:backend-v2
+
+docker run -d \
+  --name frontend \
+  -p 4200:80 \
+  byteforgemp/pnb:frontend-v2
 
 
 
