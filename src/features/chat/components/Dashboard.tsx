@@ -16,8 +16,8 @@ export default function Dashboard() {
       <main className="main">
 
         <div className="topbar">
-          <span>Welcome, MAYANK PRAKASH!</span>
-          <div className="avatar">MP</div>
+          <span>Welcome, USER!</span>
+          <div className="avatar">U</div>
         </div>
 
         <div className="dashboard-content">
