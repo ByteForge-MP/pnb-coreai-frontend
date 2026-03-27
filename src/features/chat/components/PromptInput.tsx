@@ -96,7 +96,7 @@ export default function PromptInput({
         onChange={(e) =>
           handleFile(e.target.files?.[0], e.target)
         }
-        accept=".pdf,.doc,.docx,.txt,.xlsx"
+        accept="image/*,.pdf,.doc,.docx,.txt,.xlsx"
       />
 
       <input

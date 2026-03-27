@@ -37,10 +37,10 @@ export default function MessageBubble({ message }: { message: Message }) {
     message.streaming &&
     message.content.trim() === "";
 
-  // const isStreamingText =
-  //   message.role === "assistant" &&
-  //   message.streaming &&
-  //   message.content.trim() !== "";
+  const isStreamingText =
+    message.role === "assistant" &&
+    message.streaming &&
+    message.content.trim() !== "";
 
   const [chartData, setChartData] = useState<any>(null);
   const [showChart, setShowChart] = useState(false);
@@ -231,7 +231,7 @@ export default function MessageBubble({ message }: { message: Message }) {
 
         {/* STREAMING TEXT */}
 
-        {isThinking && (
+        {isStreamingText && (
 
           <div className="bubble">
 
@@ -251,9 +251,13 @@ export default function MessageBubble({ message }: { message: Message }) {
 
             <div className="bubble">
 
-              { !isUser && 
-               <img src={message.image} className="rtl-slide"/>
-              }
+              {message.image && (
+                <img
+                  src={message.image}
+                  alt="Uploaded attachment"
+                  className="message-image rtl-slide"
+                />
+              )}
 
               {isUser ? (
                 message.content

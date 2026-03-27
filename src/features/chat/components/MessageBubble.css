@@ -216,6 +216,15 @@
   animation: rtlSlideFade 0.6s ease-out forwards;
 }
 
+.message-image {
+  display: block;
+  max-width: min(320px, 100%);
+  max-height: 260px;
+  margin-bottom: 12px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
 @keyframes rtlSlideFade {
   0% {
     opacity: 0;
@@ -232,5 +241,4 @@
     transform: translateX(0); /* final position */
   }
 }
-
 
